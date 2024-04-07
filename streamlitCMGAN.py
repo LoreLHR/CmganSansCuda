@@ -20,7 +20,7 @@ from utils import *
 import librosa
 import streamlit as st
 
-torch.cuda.empty_cache()
+#torch.cuda.empty_cache()
 
 @torch.no_grad()
 def play_audio(audio_data, sample_rate=16000):
@@ -107,8 +107,8 @@ if option == "Record sound":
         n_fft = 400
         
         model = generator.TSCNet(num_channel=64, num_features=n_fft // 2 + 1)
-        model.load_state_dict(torch.load(model_path, map_location='cuda:0'))
-        model.eval().cuda()
+        model.load_state_dict(torch.load(model_path, map_location='cpu'))
+        model.eval()
         rec_audio, length = enhance_one_track(model, rec_file_path, saved_dir, 16000 * 16, n_fft, n_fft // 4, save_tracks)
         # Afficher le résultat de la suppression de bruit
         st.markdown("**Audio cleaned with CMGAN**")
@@ -163,8 +163,8 @@ else:
                n_fft = 400
                
                model = generator.TSCNet(num_channel=64, num_features=n_fft // 2 + 1)
-               model.load_state_dict(torch.load(model_path, map_location='cuda:0'))
-               model.eval().cuda()
+               model.load_state_dict(torch.load(model_path, map_location='cpu'))
+               model.eval()
                est_audio, length = enhance_one_track(model, result_file_path, saved_dir, 16000 * 16, n_fft, n_fft // 4, save_tracks)
                # Afficher le résultat de la suppression de bruit
                st.markdown("**Audio cleaned with CMGAN**")
