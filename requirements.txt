@@ -6,6 +6,7 @@ torchaudio
 torch
 librosa
 streamlit
+einops
 pydub
 natsort
 wave
