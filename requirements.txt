@@ -2,6 +2,7 @@ numpy
 pyaudio
 sounddevice
 soundfile
+pesq
 torchaudio
 torch
 librosa
