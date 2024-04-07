@@ -163,7 +163,7 @@ else:
                n_fft = 400
                
                model = generator.TSCNet(num_channel=64, num_features=n_fft // 2 + 1)
-               model.load_state_dict(torch.load(model_path, map_location='cpu'))
+               model.load_state_dict(torch.load(model_path, map_location='cuda:0'))
                model.eval().cuda()
                est_audio, length = enhance_one_track(model, result_file_path, saved_dir, 16000 * 16, n_fft, n_fft // 4, save_tracks)
                # Afficher le résultat de la suppression de bruit
