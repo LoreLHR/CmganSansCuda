@@ -21,7 +21,7 @@ def enhance_one_track(
     if noisy.shape[0] == 2:
         noisy=stereo_to_mono(noisy)
     sr == 16000
-    noisy = noisy.cuda()
+    # noisy = noisy.cuda()
 
     c = torch.sqrt(noisy.size(-1) / torch.sum((noisy**2.0), dim=-1))
     noisy = torch.transpose(noisy, 0, 1)
@@ -39,7 +39,7 @@ def enhance_one_track(
         noisy = torch.reshape(noisy, (batch_size, -1))
 
     noisy_spec = torch.stft(
-        noisy, n_fft, hop, window=torch.hamming_window(n_fft).cuda(), onesided=True, return_complex=True
+        noisy, n_fft, hop, window=torch.hamming_window(n_fft), onesided=True, return_complex=True
     )
     noisy_spec = power_compress(noisy_spec).permute(0, 1, 3, 2)
     est_real, est_imag = model(noisy_spec)
@@ -51,7 +51,7 @@ def enhance_one_track(
         est_spec_uncompress,
         n_fft,
         hop,
-        window=torch.hamming_window(n_fft).cuda(),
+        window=torch.hamming_window(n_fft),
         onesided=True
     )
     est_audio = est_audio / c
