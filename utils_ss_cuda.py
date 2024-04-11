@@ -15,7 +15,7 @@ import librosa
 def enhance_one_track(
     model, audio_path, saved_dir, cut_len, n_fft=200, hop=100, save_tracks=False):
     name = os.path.split(audio_path)[-1]
-    nump_noise, sr = librosa.load(audio_path,sr=16000)# Downsample 44.1kHz to 8kHz
+    nump_noise, sr = librosa.load(audio_path,sr=16000)
     noisy = torch.from_numpy(nump_noise)
     noisy = noisy.unsqueeze(0)
     if noisy.shape[0] == 2:
@@ -68,7 +68,6 @@ def resample_to_16000(audio, current_sample_rate):
     resampler = T.Resample(orig_freq=current_sample_rate, new_freq=16000)
     resampled_audio = resampler(audio)
     
-    # Ajuster la longueur de l'audio pour compenser le changement de fréquence d'échantillonnage
     orig_length = audio.shape[1]
     new_length = resampled_audio.shape[1]
     ratio = orig_length / new_length
