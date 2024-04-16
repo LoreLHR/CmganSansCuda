@@ -15,7 +15,7 @@ from natsort import natsorted
 
 from models import generator
 from tools.compute_metrics import compute_metrics
-from utils import *
+from utils_ss_cuda  import *
 
 import librosa
 import streamlit as st
